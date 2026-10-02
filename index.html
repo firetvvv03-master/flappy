@@ -76,7 +76,7 @@
             <!-- Hearts Display (Max 5) -->
             <div id="heartsContainer" class="flex items-center gap-0.5 text-base">
                 <span id="heart1">❤️</span>
-                <span id="heart2">❤️</span>
+                <span id="heart2">❤️️</span>
                 <span id="heart3">❤</span>
                 <span id="heart4">❤️</span>
                 <span id="heart5">❤️</span>
@@ -517,7 +517,7 @@
 
         let abilityCooldownFrames = 0;
 
-        let nextBossLevel = 65;
+        let nextBossLevel = 75;
         let activeBoss = null;
         let playerProjectiles = [];
         let bossProjectiles = [];
@@ -815,7 +815,7 @@
             combo = 1;
             surgeTimer = 0;
             abilityCooldownFrames = 0;
-            nextBossLevel = 65;
+            nextBossLevel = 75;
             activeBoss = null;
             playerProjectiles = [];
             bossProjectiles = [];
@@ -904,7 +904,7 @@
             updateCoinDisplays();
             document.getElementById('scoreDisplay').innerText = score;
 
-            for (let i = 0; i < 65; i++) {
+            for (let i = 0; i < 75; i++) {
                 particles.push({
                     x: activeBoss.x,
                     y: activeBoss.y,
@@ -919,7 +919,7 @@
             activeBoss = null;
             bossProjectiles = [];
             document.getElementById('bossHpContainer').classList.add('hidden');
-            nextBossLevel += 65;
+            nextBossLevel += 75;
         }
 
         function takeDamage() {
@@ -1188,10 +1188,9 @@
 
             let currentSpeed = dragon.slowMotionTimer > 0 ? config.speed * 0.5 : config.speed;
             
-            // Bug fix: When not in a boss fight, freeze power-up slows portals down instead of dragon.
             if (dragon.freezeTimer > 0) {
                 if (!activeBoss) {
-                    currentSpeed *= 0.15; // Slow down portals/obstacles during freeze when no boss is active
+                    currentSpeed *= 0.15;
                 }
             }
 
@@ -1222,7 +1221,6 @@
             frameCount++;
 
             if (activeBoss) {
-                // Bug fix: When boss is frozen by freeze power-up/ability, boss and boss projectiles stay frozen (don't move or attack).
                 if (dragon.freezeTimer === 0) {
                     if (activeBoss.x > activeBoss.targetX) {
                         activeBoss.x -= 2;
@@ -1342,11 +1340,9 @@
 
             for (let i = bossProjectiles.length - 1; i >= 0; i--) {
                 let bp = bossProjectiles[i];
-                // Bug fix: Boss projectiles don't move when boss is frozen
-                if (dragon.freezeTimer === 0) {
-                    bp.x += bp.vx;
-                    bp.y += bp.vy;
-                }
+                // Bug fix: Boss projectiles do NOT freeze when boss is frozen; they act normal
+                bp.x += bp.vx;
+                bp.y += bp.vy;
 
                 if (Math.hypot(dragon.x - bp.x, dragon.y - bp.y) < dragon.radius + bp.radius) {
                     takeDamage();
@@ -1457,9 +1453,9 @@
                 if (p.x + p.width < 0) portals.splice(i, 1);
             }
 
-            // Bug fix: Removed unupgraded strong magnetism. Magnetism now requires active magnet or upgraded magnet skill level.
+            // Bug fix: Reduced dragon magnetism when boss is active (removed instant boss full-screen magnet pull)
             const baseMagnetRadius = skillLevels.magnet_range > 0 ? 80 + (skillLevels.magnet_range * 40) : 0;
-            const magnetPullRadius = dragon.magnetTimer > 0 || activeBoss ? 240 : baseMagnetRadius;
+            const magnetPullRadius = dragon.magnetTimer > 0 ? 240 : (activeBoss ? 60 : baseMagnetRadius);
 
             for (let i = collectibleCoins.length - 1; i >= 0; i--) {
                 let c = collectibleCoins[i];
@@ -1474,10 +1470,10 @@
 
                 if (Math.hypot(dragon.x - c.x, dragon.y - c.y) < dragon.radius + c.radius + 15) {
                     sound.playCoin();
-                    sessionCoins++;
-                    coins++;
+                    sessionCoins += 2; // Updated coin count increment from +1 to +2 per coin
+                    coins += 2;
                     updateCoinDisplays();
-                    spawnFloatingText('+1 🪙', c.x, c.y - 10, '#f59e0b');
+                    spawnFloatingText('+2 🪙', c.x, c.y - 10, '#f59e0b');
                     collectibleCoins.splice(i, 1);
                     continue;
                 }
