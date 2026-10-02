@@ -517,7 +517,7 @@
 
         let abilityCooldownFrames = 0;
 
-        let nextBossLevel = 50;
+        let nextBossLevel = 65;
         let activeBoss = null;
         let playerProjectiles = [];
         let bossProjectiles = [];
@@ -677,9 +677,8 @@
                 dragon.hasShield = true;
                 spawnFloatingText('💎 EMERALD SHIELD!', dragon.x, dragon.y - 20, skin.primary);
             } else if (activeSkin === 'frost_bite' || activeSkin === 'amethyst_lord') {
-                // Set to exactly 6 seconds (360 frames) for Time Freeze / Blizzard Freeze
                 dragon.freezeTimer = 360 + (skillLevels.shield_duration * 60);
-                spawnFloatingText('🧊 TIME FREEZE (6s)!', dragon.x, dragon.y - 20, skin.primary);
+                spawnFloatingText('🧊 TIME FREEZE (6s) - PORTAL SLOW!', dragon.x, dragon.y - 20, skin.primary);
             }
 
             updateAbilityHUD();
@@ -816,7 +815,7 @@
             combo = 1;
             surgeTimer = 0;
             abilityCooldownFrames = 0;
-            nextBossLevel = 50;
+            nextBossLevel = 65;
             activeBoss = null;
             playerProjectiles = [];
             bossProjectiles = [];
@@ -905,7 +904,7 @@
             updateCoinDisplays();
             document.getElementById('scoreDisplay').innerText = score;
 
-            for (let i = 0; i < 50; i++) {
+            for (let i = 0; i < 65; i++) {
                 particles.push({
                     x: activeBoss.x,
                     y: activeBoss.y,
@@ -920,7 +919,7 @@
             activeBoss = null;
             bossProjectiles = [];
             document.getElementById('bossHpContainer').classList.add('hidden');
-            nextBossLevel += 50;
+            nextBossLevel += 65;
         }
 
         function takeDamage() {
@@ -1140,7 +1139,7 @@
                 activeUI.innerText = `👑 TITAN MODE (${Math.ceil(dragon.titanTimer / 60)}s)`;
                 activeUI.classList.remove('hidden');
             } else if (dragon.freezeTimer > 0) {
-                activeUI.innerText = `🧊 TIME FREEZE (${Math.ceil(dragon.freezeTimer / 60)}s)`;
+                activeUI.innerText = activeBoss ? `🧊 BOSS FROZEN (${Math.ceil(dragon.freezeTimer / 60)}s)` : `🧊 PORTAL FREEZE (${Math.ceil(dragon.freezeTimer / 60)}s)`;
                 activeUI.classList.remove('hidden');
             } else if (dragon.laserBeamTimer > 0) {
                 activeUI.innerText = `💥 LASER BLAST!`;
@@ -1188,7 +1187,14 @@
             }
 
             let currentSpeed = dragon.slowMotionTimer > 0 ? config.speed * 0.5 : config.speed;
-            if (dragon.freezeTimer > 0) currentSpeed *= 0.1; // Freeze slows world/movement heavily during time freeze
+            
+            // Bug fix: When not in a boss fight, freeze power-up slows portals down instead of dragon.
+            if (dragon.freezeTimer > 0) {
+                if (!activeBoss) {
+                    currentSpeed *= 0.15; // Slow down portals/obstacles during freeze when no boss is active
+                }
+            }
+
             if (surgeTimer > 0) currentSpeed *= 1.35;
 
             dragon.velocity += config.gravity;
@@ -1216,7 +1222,7 @@
             frameCount++;
 
             if (activeBoss) {
-                // If Time Freeze is active, freeze boss movement and attack cooldowns completely
+                // Bug fix: When boss is frozen by freeze power-up/ability, boss and boss projectiles stay frozen (don't move or attack).
                 if (dragon.freezeTimer === 0) {
                     if (activeBoss.x > activeBoss.targetX) {
                         activeBoss.x -= 2;
@@ -1336,6 +1342,7 @@
 
             for (let i = bossProjectiles.length - 1; i >= 0; i--) {
                 let bp = bossProjectiles[i];
+                // Bug fix: Boss projectiles don't move when boss is frozen
                 if (dragon.freezeTimer === 0) {
                     bp.x += bp.vx;
                     bp.y += bp.vy;
@@ -1450,22 +1457,22 @@
                 if (p.x + p.width < 0) portals.splice(i, 1);
             }
 
-            const magnetPullRadius = 240 + (skillLevels.magnet_range * 50);
+            // Bug fix: Removed unupgraded strong magnetism. Magnetism now requires active magnet or upgraded magnet skill level.
+            const baseMagnetRadius = skillLevels.magnet_range > 0 ? 80 + (skillLevels.magnet_range * 40) : 0;
+            const magnetPullRadius = dragon.magnetTimer > 0 || activeBoss ? 240 : baseMagnetRadius;
 
             for (let i = collectibleCoins.length - 1; i >= 0; i--) {
                 let c = collectibleCoins[i];
                 c.x -= currentSpeed;
                 c.pulse += 0.1;
 
-                // Expand pulling radius behavior so coins smoothly fly and get collected reliably
                 const distToDragon = Math.hypot(dragon.x - c.x, dragon.y - c.y);
-                if (distToDragon < magnetPullRadius || dragon.magnetTimer > 0 || activeBoss || skillLevels.magnet_range > 0) {
+                if (magnetPullRadius > 0 && (distToDragon < magnetPullRadius || dragon.magnetTimer > 0)) {
                     c.x += (dragon.x - c.x) * 0.22;
                     c.y += (dragon.y - c.y) * 0.22;
                 }
 
-                // Generous collection radius check (dragon.radius + c.radius + 10px buffer)
-                if (Math.hypot(dragon.x - c.x, dragon.y - dragon.y < 999 ? dragon.y - c.y : 0) < dragon.radius + c.radius + 15) {
+                if (Math.hypot(dragon.x - c.x, dragon.y - c.y) < dragon.radius + c.radius + 15) {
                     sound.playCoin();
                     sessionCoins++;
                     coins++;
@@ -1483,7 +1490,7 @@
                 pow.x -= currentSpeed;
 
                 const distToDragon = Math.hypot(dragon.x - pow.x, dragon.y - pow.y);
-                if (distToDragon < magnetPullRadius || dragon.magnetTimer > 0 || activeBoss || skillLevels.magnet_range > 0) {
+                if (magnetPullRadius > 0 && (distToDragon < magnetPullRadius || dragon.magnetTimer > 0)) {
                     pow.x += (dragon.x - pow.x) * 0.18;
                     pow.y += (dragon.y - pow.y) * 0.18;
                 }
@@ -1509,7 +1516,6 @@
                     else if (pow.type === 'teleport') triggerWormholeJump();
                     else if (pow.type === 'laser') triggerLaserBlast();
                     else if (pow.type === 'nuke') triggerNuke();
-                    // Time Freeze set to 6 seconds (360 frames + skill duration)
                     else if (pow.type === 'freeze') dragon.freezeTimer = 360 + extendedDuration;
                     else if (pow.type === 'titan') dragon.titanTimer = 420 + extendedDuration;
                     else if (pow.type === 'coin_storm') triggerCoinStorm();
@@ -1587,7 +1593,7 @@
             ctx.save();
             ctx.shadowColor = `hsl(${hue}, 100%, 60%)`;
             ctx.shadowBlur = 15;
-            ctx.strokeStyle = dragon.freezeTimer > 0 ? '#38bdf8' : `hsl(${hue}, 100%, 50%)`;
+            ctx.strokeStyle = dragon.freezeTimer > 0 && !activeBoss ? '#38bdf8' : `hsl(${hue}, 100%, 50%)`;
             ctx.lineWidth = 26;
             ctx.globalAlpha = 0.35;
             ctx.beginPath();
@@ -1618,7 +1624,7 @@
 
             ctx.beginPath();
             ctx.ellipse(0, 0, 24, 8, frameCount * 0.05, 0, Math.PI * 2);
-            ctx.strokeStyle = dragon.freezeTimer > 0 ? '#93c5fd' : `hsl(${hue}, 100%, 75%)`;
+            ctx.strokeStyle = dragon.freezeTimer > 0 && !activeBoss ? '#93c5fd' : `hsl(${hue}, 100%, 75%)`;
             ctx.lineWidth = 4;
             ctx.stroke();
 
