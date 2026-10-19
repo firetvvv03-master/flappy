@@ -73,13 +73,14 @@
                 </div>
             </div>
 
-            <!-- Hearts Display (Max 5) -->
+            <!-- Hearts Display (Max 6) -->
             <div id="heartsContainer" class="flex items-center gap-0.5 text-base">
                 <span id="heart1">❤️</span>
-                <span id="heart2">❤️</span>
+                <span id="heart2">❤</span>
                 <span id="heart3">❤️</span>
                 <span id="heart4">❤️</span>
                 <span id="heart5">❤️</span>
+                <span id="heart6">❤️</span>
             </div>
             
             <div class="flex gap-4 text-right">
@@ -101,7 +102,7 @@
             <!-- BOSS HEALTH HUD OVERLAY -->
             <div id="bossHpContainer" class="hidden absolute top-3 left-1/2 -translate-x-1/2 w-3/4 glass-panel p-2 rounded-xl border border-rose-500/50 flex flex-col items-center gap-1 z-20 shadow-xl">
                 <div class="flex justify-between w-full text-[10px] font-black uppercase text-rose-400 tracking-wider">
-                    <span id="bossTitle">⚠️ POWER BOSS WAVE ⚠️</span>
+                    <span id="bossTitle">⚠️ POWER BOSS WAVE ⚠</span>
                     <span id="bossHpText">100 / 100</span>
                 </div>
                 <div class="w-full h-3 bg-slate-800 rounded-full overflow-hidden border border-white/10">
@@ -131,14 +132,28 @@
             </button>
 
             <!-- START OVERLAY -->
-            <div id="startOverlay" class="absolute inset-0 flex flex-col items-center justify-between p-6 glass-panel z-20">
-                <div class="text-center mt-2">
-                    <h2 class="text-3xl font-black tracking-tight rainbow-text drop-shadow-md">RAINBOW DRAGON</h2>
-                    <p class="text-slate-300 text-[11px] mt-1">Face Epic Power Bosses Every 50 Levels!</p>
+            <div id="startOverlay" class="absolute inset-0 flex flex-col items-center justify-between p-5 glass-panel z-20 overflow-y-auto">
+                <div class="text-center mt-1">
+                    <h2 class="text-2xl font-black tracking-tight rainbow-text drop-shadow-md">RAINBOW DRAGON</h2>
+                    <p class="text-slate-300 text-[10px] mt-0.5">Face Epic Power Bosses Every 100 Levels!</p>
                 </div>
 
-                <div class="w-full space-y-2.5 my-auto">
-                    <p class="text-[11px] font-bold text-center text-slate-400 uppercase tracking-widest">Select Difficulty</p>
+                <!-- Menu Skin Quick Select Card -->
+                <div class="w-full bg-slate-900/80 p-2.5 rounded-xl border border-white/10 flex items-center justify-between my-1">
+                    <div class="flex items-center gap-2">
+                        <div id="menuSkinPreviewIcon" class="w-8 h-8 rounded-full flex items-center justify-center text-sm shadow-md" style="background: #a855f7;">🐉</div>
+                        <div>
+                            <div class="text-[10px] text-slate-400 uppercase tracking-wider font-bold">Active Skin</div>
+                            <div id="menuSkinNameDisplay" class="text-xs font-black text-cyan-300">Rainbow Dash</div>
+                        </div>
+                    </div>
+                    <button type="button" onclick="openShopFromMenu()" class="px-2.5 py-1 rounded-lg bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-400/50 text-cyan-300 text-[11px] font-bold pulse-btn">
+                        Change Skin 🎨
+                    </button>
+                </div>
+
+                <div class="w-full space-y-2">
+                    <p class="text-[10px] font-bold text-center text-slate-400 uppercase tracking-widest">Select Difficulty</p>
                     <div class="grid grid-cols-3 gap-2">
                         <button type="button" onclick="setDifficulty('easy')" id="btn-easy" class="diff-btn pulse-btn py-1.5 rounded-xl font-bold text-xs bg-slate-800 border border-slate-700 text-emerald-400">EASY</button>
                         <button type="button" onclick="setDifficulty('normal')" id="btn-normal" class="diff-btn pulse-btn py-1.5 rounded-xl font-bold text-xs bg-slate-800 border-2 border-cyan-500 text-cyan-400 shadow-lg shadow-cyan-500/20">NORMAL</button>
@@ -146,25 +161,25 @@
                     </div>
 
                     <div class="grid grid-cols-2 gap-2">
-                        <button type="button" onclick="openShop()" class="py-2.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-400/40 text-amber-300 text-xs font-bold flex items-center justify-center gap-1.5 pulse-btn">
+                        <button type="button" onclick="openShop()" class="py-2 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-400/40 text-amber-300 text-xs font-bold flex items-center justify-center gap-1.5 pulse-btn">
                             🛍 Item Shop
                         </button>
-                        <button type="button" onclick="openQuests()" class="py-2.5 rounded-xl bg-purple-500/20 hover:bg-purple-500/30 border border-purple-400/40 text-purple-300 text-xs font-bold flex items-center justify-center gap-1.5 pulse-btn">
+                        <button type="button" onclick="openQuests()" class="py-2 rounded-xl bg-purple-500/20 hover:bg-purple-500/30 border border-purple-400/40 text-purple-300 text-xs font-bold flex items-center justify-center gap-1.5 pulse-btn">
                             📜 Quests
                         </button>
                     </div>
 
                     <div class="flex gap-2">
-                        <button type="button" onclick="openAchievements()" class="flex-1 py-2 rounded-xl bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-400/40 text-cyan-300 text-xs font-bold flex items-center justify-center gap-1.5 pulse-btn">
+                        <button type="button" onclick="openAchievements()" class="flex-1 py-1.5 rounded-xl bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-400/40 text-cyan-300 text-xs font-bold flex items-center justify-center gap-1.5 pulse-btn">
                             🏆 Achievements
                         </button>
-                        <button type="button" id="soundToggleBtn" onclick="toggleSound()" class="flex-1 py-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 border border-white/10 text-xs font-semibold flex items-center justify-center gap-1.5">
+                        <button type="button" id="soundToggleBtn" onclick="toggleSound()" class="flex-1 py-1.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 border border-white/10 text-xs font-semibold flex items-center justify-center gap-1.5">
                             <span id="soundIcon">🔊</span> <span id="soundText">Sound: ON</span>
                         </button>
                     </div>
                 </div>
 
-                <button type="button" onclick="startGame()" class="pulse-btn w-full py-3.5 rounded-2xl bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 font-black text-base text-white shadow-xl shadow-purple-500/30 hover:brightness-110 active:scale-95 transition">
+                <button type="button" onclick="startGame()" class="pulse-btn w-full py-3 rounded-2xl bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 font-black text-sm text-white shadow-xl shadow-purple-500/30 hover:brightness-110 active:scale-95 transition mt-1">
                     PLAY NOW
                 </button>
             </div>
@@ -194,7 +209,7 @@
                 <div class="text-center w-full max-w-xs space-y-4 bg-slate-900 p-6 rounded-2xl border border-rose-500/40 shadow-2xl">
                     <div class="text-3xl">⚠️</div>
                     <h3 class="text-xl font-black text-rose-400">RETURN TO MENU?</h3>
-                    <p class="text-xs text-slate-300">Are you sure? All current match coin collections, stats, and unlocked skins/trails will be reset!</p>
+                    <p class="text-xs text-slate-300">Are you sure? All current match coin collections and stats will be reset!</p>
                     <div class="flex gap-2 pt-2">
                         <button type="button" onclick="executeExitToMenu()" class="flex-1 py-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-black text-xs pulse-btn">YES, EXIT</button>
                         <button type="button" onclick="closeConfirmMenuModal()" class="py-3 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 font-bold text-xs">CANCEL</button>
@@ -292,7 +307,7 @@
                 <div class="text-center w-full max-w-xs space-y-4 bg-slate-900 p-6 rounded-2xl border border-amber-500/40 shadow-2xl">
                     <div class="text-3xl">📺</div>
                     <h3 id="adModalTitle" class="text-xl font-black text-amber-400">WATCH AD TO UNLOCK</h3>
-                    <p id="adModalDescription" class="text-xs text-slate-300">Watch a quick promotional video to instantly unlock this item for free!</p>
+                    <p id="adModalDescription" class="text-xs text-slate-300">Watch a quick promotional video to instantly start your 3-day free trial!</p>
                     <div id="adProgressBarContainer" class="w-full h-2 bg-slate-800 rounded-full overflow-hidden hidden">
                         <div id="adProgressBar" class="h-full bg-amber-400 transition-all duration-300" style="width: 0%"></div>
                     </div>
@@ -304,29 +319,39 @@
             </div>
 
             <!-- GAME OVER OVERLAY -->
-            <div id="gameOverOverlay" class="hidden absolute inset-0 flex flex-col items-center justify-center p-6 glass-panel z-20">
-                <div class="text-center w-full max-w-xs space-y-4">
-                    <div class="inline-block p-3 rounded-full bg-rose-500/20 border border-rose-500/30 text-3xl mb-1">
+            <div id="gameOverOverlay" class="hidden absolute inset-0 flex flex-col items-center justify-center p-4 glass-panel z-20 overflow-y-auto">
+                <div class="text-center w-full max-w-xs space-y-3 my-auto">
+                    <div class="inline-block p-2 rounded-full bg-rose-500/20 border border-rose-500/30 text-2xl mb-0.5">
                         💥
                     </div>
-                    <h2 class="text-3xl font-black text-rose-400">GAME OVER!</h2>
+                    <h2 class="text-2xl font-black text-rose-400">GAME OVER!</h2>
                     
-                    <div class="bg-slate-900/80 p-4 rounded-2xl border border-white/10 space-y-2">
+                    <div class="bg-slate-900/80 p-3 rounded-2xl border border-white/10 space-y-1.5 text-xs">
                         <div class="flex justify-between items-center">
-                            <span class="text-slate-400 text-sm">Score</span>
-                            <span id="finalScore" class="text-2xl font-black text-white">0</span>
+                            <span class="text-slate-400">Score</span>
+                            <span id="finalScore" class="text-xl font-black text-white">0</span>
                         </div>
                         <div class="flex justify-between items-center">
-                            <span class="text-slate-400 text-sm">Coins Earned</span>
-                            <span id="finalCoins" class="text-lg font-bold text-amber-400">+0 🪙</span>
+                            <span class="text-slate-400">Coins Earned</span>
+                            <span id="finalCoins" class="text-base font-bold text-amber-400">+0 🪙</span>
                         </div>
-                        <div class="flex justify-between items-center border-t border-slate-800 pt-2">
-                            <span class="text-slate-400 text-sm">Best High Score</span>
-                            <span id="finalHighScore" class="text-2xl font-black text-amber-400">0</span>
+                        <div class="flex justify-between items-center border-t border-slate-800 pt-1.5">
+                            <span class="text-slate-400">Best High Score</span>
+                            <span id="finalHighScore" class="text-xl font-black text-amber-400">0</span>
                         </div>
                     </div>
 
-                    <button type="button" onclick="startGame()" class="pulse-btn w-full py-4 rounded-2xl bg-gradient-to-r from-emerald-400 to-cyan-500 font-black text-lg text-slate-950 shadow-xl shadow-cyan-500/20 hover:brightness-110 transition">
+                    <!-- Revive & Heart Purchase Options -->
+                    <div class="space-y-2">
+                        <button type="button" id="buyHeartBtn" onclick="buyHeartsWithCoins()" class="pulse-btn w-full py-2.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-400/50 text-amber-300 text-xs font-bold flex items-center justify-center gap-1.5">
+                            🛒 Buy 3 Hearts (300 🪙) <span id="buyHeartLimit" class="text-[10px] text-amber-400/70 font-normal">(1-time max)</span>
+                        </button>
+                        <button type="button" id="watchAdHeartBtn" onclick="watchAdForFullHeart()" class="pulse-btn w-full py-2.5 rounded-xl bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-400/50 text-cyan-300 text-xs font-bold flex items-center justify-center gap-1.5">
+                            📺 Watch Ad for Full Health <span id="adHeartCount" class="text-[10px] text-cyan-400/70 font-normal">(3 left)</span>
+                        </button>
+                    </div>
+
+                    <button type="button" onclick="startGame()" class="pulse-btn w-full py-3 rounded-2xl bg-gradient-to-r from-emerald-400 to-cyan-500 font-black text-base text-slate-950 shadow-xl shadow-cyan-500/20 hover:brightness-110 transition">
                         TRY AGAIN
                     </button>
                 </div>
@@ -519,12 +544,22 @@
             { id: 'rainbow', name: 'Rainbow Dash', cost: 0, primary: '#a855f7', abilityIcon: '🐉', abilityName: 'Roar', cooldown: 15, adUnlock: false },
             { id: 'neon', name: 'Cyber Neon', cost: 25, primary: '#06b6d4', abilityIcon: '🧲', abilityName: 'Magnet', cooldown: 10, adUnlock: false },
             { id: 'phoenix', name: 'Golden Phoenix', cost: 50, primary: '#f59e0b', abilityIcon: '🔥', abilityName: 'Dash', cooldown: 12, adUnlock: false },
+            { id: 'shadow_reaper', name: 'Shadow Reaper', cost: 75, primary: '#4c1d95', abilityIcon: '🔮', abilityName: 'Ghost Wave', cooldown: 12, adUnlock: false },
+            { id: 'cyber_samurai', name: 'Cyber Samurai', cost: 120, primary: '#e11d48', abilityIcon: '⚔️', abilityName: 'Laser Blade', cooldown: 10, adUnlock: false },
+            { id: 'thunder_monarch', name: 'Thunder Monarch', cost: 150, primary: '#eab308', abilityIcon: '⚡', abilityName: 'Lightning Strike', cooldown: 11, adUnlock: false },
+            { id: 'bloodwing_vampire', name: 'Bloodwing Vampire', cost: 180, primary: '#9f1239', abilityIcon: '🩸', abilityName: 'Life Drain', cooldown: 13, adUnlock: false },
+            { id: 'solar_flare', name: 'Solar Flare Dragon', cost: 220, primary: '#f97316', abilityIcon: '☀️', abilityName: 'Solar Beam', cooldown: 14, adUnlock: false },
             { id: 'void', name: 'Cosmic Void', cost: 100, primary: '#ec4899', abilityIcon: '🌀', abilityName: 'Warp', cooldown: 14, adUnlock: false },
             { id: 'emerald_dragon', name: 'Emerald Wyrm', cost: 0, primary: '#10b981', abilityIcon: '💎', abilityName: 'Shield', cooldown: 12, adUnlock: true },
             { id: 'amethyst_lord', name: 'Amethyst Sovereign', cost: 0, primary: '#8b5cf6', abilityIcon: '🔮', abilityName: 'Freeze', cooldown: 15, adUnlock: true },
             { id: 'magma_beast', name: 'Magma Inferno', cost: 0, primary: '#ef4444', abilityIcon: '🌋', abilityName: 'Nuke', cooldown: 20, adUnlock: true },
             { id: 'frost_bite', name: 'Frost Wyvern', cost: 0, primary: '#38bdf8', abilityIcon: '❄️', abilityName: 'Blizzard', cooldown: 14, adUnlock: true },
-            { id: 'galaxy_starlight', name: 'Galaxy Starlight', cost: 0, primary: '#6366f1', abilityIcon: '✨', abilityName: 'Wormhole', cooldown: 12, adUnlock: true }
+            { id: 'galaxy_starlight', name: 'Galaxy Starlight', cost: 0, primary: '#6366f1', abilityIcon: '✨', abilityName: 'Wormhole', cooldown: 12, adUnlock: true },
+            { id: 'toxic_leviathan', name: 'Toxic Leviathan', cost: 0, primary: '#84cc16', abilityIcon: '☣️', abilityName: 'Acid Spray', cooldown: 12, adUnlock: true },
+            { id: 'sakura_spirit', name: 'Sakura Spirit', cost: 0, primary: '#f472b6', abilityIcon: '🌸', abilityName: 'Petal Shield', cooldown: 11, adUnlock: true },
+            { id: 'steampunk_aviator', name: 'Steampunk Aviator', cost: 0, primary: '#b45309', abilityIcon: '⚙️', abilityName: 'Overcharge', cooldown: 10, adUnlock: true },
+            { id: 'obsidian_titan', name: 'Obsidian Titan', cost: 0, primary: '#334155', abilityIcon: '🗿', abilityName: 'Stone Armor', cooldown: 15, adUnlock: true },
+            { id: 'celestial_eclipse', name: 'Celestial Eclipse', cost: 0, primary: '#312e81', abilityIcon: '🌙', abilityName: 'Shadow Warp', cooldown: 13, adUnlock: true }
         ];
 
         const PORTAL_SKINS = [
@@ -578,17 +613,21 @@
         let activeShopTab = 'skins';
         let score = 0;
         let combo = 1;
-        let coins = 0;
+        let coins = parseInt(localStorage.getItem('rainbow_flapper_coins') || '150');
         let sessionCoins = 0;
         
-        let unlockedSkins = ["rainbow"];
-        let activeSkin = "rainbow";
+        let boughtHeartsThisGame = false;
+        let adsWatchedForHeartsCount = 0;
 
-        let unlockedPortals = ["default_multi"];
-        let activePortalSkin = "default_multi";
+        let unlockedSkins = JSON.parse(localStorage.getItem('rainbow_flapper_unlocked_skins') || '["rainbow"]');
+        let activeSkin = localStorage.getItem('rainbow_flapper_active_skin') || "rainbow";
+        let adTrialExpirations = JSON.parse(localStorage.getItem('rainbow_flapper_ad_trials') || '{}');
 
-        let unlockedTrails = ["rainbow"];
-        let activeTrail = "rainbow";
+        let unlockedPortals = JSON.parse(localStorage.getItem('rainbow_flapper_unlocked_portals') || '["default_multi"]');
+        let activePortalSkin = localStorage.getItem('rainbow_flapper_active_portal') || "default_multi";
+
+        let unlockedTrails = JSON.parse(localStorage.getItem('rainbow_flapper_unlocked_trails') || '["rainbow"]');
+        let activeTrail = localStorage.getItem('rainbow_flapper_active_trail') || "rainbow";
 
         let pendingAdItemType = null; 
         let pendingAdItemId = null;
@@ -602,11 +641,11 @@
         let frameCount = 0;
         let rainbowHue = 0;
         let surgeTimer = 0;
-        let hearts = 5;
+        let hearts = 6;
 
         let abilityCooldownFrames = 0;
 
-        let nextBossLevel = 75;
+        let nextBossLevel = 100;
         let activeBoss = null;
         let playerProjectiles = [];
         let bossProjectiles = [];
@@ -618,7 +657,14 @@
             { id: 'phantom', name: 'Cyber Phantom (Power Boss)', hpMultiplier: 2.0, color: '#06b6d4', secondaryColor: '#0e7490', radius: 38, attackSpeed: 45, type: 'teleport' },
             { id: 'hydra', name: 'Plasma Hydra (Elite Boss)', hpMultiplier: 2.4, color: '#10b981', secondaryColor: '#047857', radius: 44, attackSpeed: 42, type: 'triple' },
             { id: 'solar', name: 'Solar Titan (Power Boss)', hpMultiplier: 2.6, color: '#eab308', secondaryColor: '#ca8a04', radius: 46, attackSpeed: 40, type: 'bullet_hell' },
-            { id: 'overlord', name: 'Rainbow Overlord (Ultimate Boss)', hpMultiplier: 3.0, color: '#a855f7', secondaryColor: '#6b21a8', radius: 48, attackSpeed: 38, type: 'bullet_hell' }
+            { id: 'overlord', name: 'Rainbow Overlord (Ultimate Boss)', hpMultiplier: 3.0, color: '#a855f7', secondaryColor: '#6b21a8', radius: 48, attackSpeed: 38, type: 'bullet_hell' },
+            { id: 'frostbite_wyrm', name: 'Frostbite Ice Wyrm', hpMultiplier: 3.3, color: '#38bdf8', secondaryColor: '#0284c7', radius: 45, attackSpeed: 42, type: 'freeze_blast' },
+            { id: 'kronos_clockwork', name: 'Kronos Clockwork Titan', hpMultiplier: 3.6, color: '#b45309', secondaryColor: '#78350f', radius: 50, attackSpeed: 36, type: 'time_warp' },
+            { id: 'abyssal_kraken', name: 'Abyssal Void Kraken', hpMultiplier: 4.0, color: '#6366f1', secondaryColor: '#312e81', radius: 52, attackSpeed: 34, type: 'tentacle_swarm' },
+            { id: 'storm_emperor', name: 'Thunderstorm Emperor', hpMultiplier: 4.4, color: '#facc15', secondaryColor: '#ca8a04', radius: 48, attackSpeed: 32, type: 'lightning_storm' },
+            { id: 'crimson_vampire', name: 'Blood Lord Dracula', hpMultiplier: 4.8, color: '#9f1239', secondaryColor: '#4c0519', radius: 46, attackSpeed: 30, type: 'life_siphon' },
+            { id: 'toxic_goliath', name: 'Bio-Hazard Goliath', hpMultiplier: 5.2, color: '#84cc16', secondaryColor: '#365314', radius: 54, attackSpeed: 28, type: 'acid_spores' },
+            { id: 'supernova_prime', name: 'Supernova Prime Core', hpMultiplier: 6.0, color: '#ec4899', secondaryColor: '#831843', radius: 58, attackSpeed: 24, type: 'supernova_bullet_hell' }
         ];
 
         let dragon = {
@@ -631,7 +677,6 @@
             hasShield: false,
             invincibleTimer: 0,
             scoreMultiplierTimer: 0,
-            slowMotionTimer: 0,
             magnetTimer: 0,
             miniTimer: 0,
             ghostTimer: 0,
@@ -653,12 +698,10 @@
         const POWERUP_TYPES = [
             { type: 'shield', symbol: '🛡️', color: '#38bdf8' },
             { type: 'multiplier', symbol: '⭐', color: '#f59e0b' },
-            { type: 'slow', symbol: '⏳', color: '#a855f7' },
             { type: 'magnet', symbol: '🧲', color: '#ef4444' },
             { type: 'mini', symbol: '🔍', color: '#10b981' },
             { type: 'ghost', symbol: '👻', color: '#e0e7ff' },
             { type: 'heart', symbol: '❤️', color: '#f43f5e' },
-            { type: 'teleport', symbol: '🌀', color: '#8b5cf6' },
             { type: 'laser', symbol: '💥', color: '#f97316' },
             { type: 'nuke', symbol: '💣', color: '#ef4444' },
             { type: 'freeze', symbol: '🧊', color: '#06b6d4' },
@@ -690,15 +733,35 @@
         window.addEventListener('resize', resizeCanvas);
 
         function updateCoinDisplays() {
+            localStorage.setItem('rainbow_flapper_coins', coins);
             document.getElementById('coinDisplay').innerText = coins;
             document.getElementById('shopCoinsDisplay').innerText = coins;
         }
 
+        function isItemTrialActive(id) {
+            if (!adTrialExpirations[id]) return false;
+            return Date.now() < adTrialExpirations[id];
+        }
+
+        function getTrialDaysRemaining(id) {
+            if (!adTrialExpirations[id]) return 0;
+            const diff = adTrialExpirations[id] - Date.now();
+            if (diff <= 0) return 0;
+            return Math.ceil(diff / (1000 * 60 * 60 * 24));
+        }
+
+        function updateMenuSkinPreview() {
+            const skin = SKINS.find(s => s.id === activeSkin) || SKINS[0];
+            document.getElementById('menuSkinPreviewIcon').innerText = skin.abilityIcon;
+            document.getElementById('menuSkinPreviewIcon').style.background = skin.primary;
+            document.getElementById('menuSkinNameDisplay').innerText = skin.name;
+        }
+
         function updateHeartsDisplay() {
-            for (let i = 1; i <= 5; i++) {
+            for (let i = 1; i <= 6; i++) {
                 const heartElem = document.getElementById(`heart${i}`);
                 if (i <= hearts) {
-                    heartElem.innerText = '❤️';
+                    heartElem.innerText = '❤';
                     heartElem.style.opacity = '1.0';
                 } else {
                     heartElem.innerText = '🖤';
@@ -758,6 +821,40 @@
             });
         }
 
+        function buyHeartsWithCoins() {
+            if (boughtHeartsThisGame) return;
+            const cost = 300;
+            if (coins >= cost) {
+                coins -= cost;
+                boughtHeartsThisGame = true;
+                hearts = Math.min(6, hearts + 3);
+                updateCoinDisplays();
+                updateHeartsDisplay();
+
+                const limitSpan = document.getElementById('buyHeartLimit');
+                limitSpan.innerText = "(Purchased)";
+                document.getElementById('buyHeartBtn').classList.add('opacity-50', 'cursor-not-allowed');
+
+                document.getElementById('gameOverOverlay').classList.add('hidden');
+                gameState = 'PLAYING';
+                dragon.invincibleTimer = 120;
+                spawnFloatingText('🛒 +3 HEARTS PURCHASED!', dragon.x, dragon.y - 20, '#f59e0b');
+                sound.playPowerup();
+            } else {
+                spawnFloatingText('❌ NOT ENOUGH COINS!', canvas.width / 2 - 80, canvas.height / 2 + 50, '#ef4444');
+                sound.playCrash();
+            }
+        }
+
+        function watchAdForFullHeart() {
+            if (adsWatchedForHeartsCount >= 3) return;
+
+            pendingAdItemType = 'full_heart_ad';
+            document.getElementById('adModalTitle').innerText = "WATCH AD FOR FULL HEALTH";
+            document.getElementById('adModalDescription').innerText = "Watch a quick video to instantly restore your Dragon's full hearts!";
+            document.getElementById('adModalOverlay').classList.remove('hidden');
+        }
+
         function triggerActiveAbility(e) {
             if (e) e.stopPropagation();
             if (gameState !== 'PLAYING' || isPaused || abilityCooldownFrames > 0) return;
@@ -768,31 +865,36 @@
 
             const roarBonusDamage = skillLevels.roar_power * 10;
 
-            if (activeSkin === 'rainbow' || activeSkin === 'galaxy_starlight') {
+            if (['rainbow', 'galaxy_starlight', 'bloodwing_vampire', 'obsidian_titan'].includes(activeSkin)) {
                 if (activeBoss) {
                     const dmg = 25 + roarBonusDamage;
                     activeBoss.hp -= dmg;
                     updateBossHpBar();
-                    spawnFloatingText(`🐉 ROAR BLAST! -${dmg} HP`, activeBoss.x, activeBoss.y, skin.primary);
+                    spawnFloatingText(`${skin.abilityIcon} ${skin.abilityName.toUpperCase()}! -${dmg} HP`, activeBoss.x, activeBoss.y, skin.primary);
+                    if (activeSkin === 'bloodwing_vampire' && hearts < 6) {
+                        hearts++;
+                        updateHeartsDisplay();
+                        spawnFloatingText('+1 ❤️ LIFE DRAIN', dragon.x, dragon.y - 20, '#f43f5e');
+                    }
                 } else {
                     let targetPortal = portals.find(p => !p.passed && p.x > dragon.x);
                     if (targetPortal) {
                         targetPortal.passed = true;
                         score += 1;
                         document.getElementById('scoreDisplay').innerText = score;
-                        spawnFloatingText('🐉 DRAGON ROAR!', dragon.x, dragon.y - 20, skin.primary);
+                        spawnFloatingText(`${skin.abilityIcon} ${skin.abilityName.toUpperCase()}!`, dragon.x, dragon.y - 20, skin.primary);
                         portals = portals.filter(p => p !== targetPortal);
                     } else {
-                        spawnFloatingText('🐉 DRAGON ROAR!', dragon.x, dragon.y - 20, skin.primary);
+                        spawnFloatingText(`${skin.abilityIcon} ${skin.abilityName.toUpperCase()}!`, dragon.x, dragon.y - 20, skin.primary);
                     }
                 }
-            } else if (activeSkin === 'neon') {
+            } else if (['neon', 'thunder_monarch', 'steampunk_aviator'].includes(activeSkin)) {
                 dragon.magnetTimer = 420 + (skillLevels.shield_duration * 60);
-                spawnFloatingText('🧲 CYBER MAGNET!', dragon.x, dragon.y - 20, skin.primary);
-            } else if (activeSkin === 'phoenix' || activeSkin === 'magma_beast') {
+                spawnFloatingText(`${skin.abilityIcon} ${skin.abilityName.toUpperCase()}!`, dragon.x, dragon.y - 20, skin.primary);
+            } else if (['phoenix', 'magma_beast', 'cyber_samurai'].includes(activeSkin)) {
                 dragon.invincibleTimer = 120 + (skillLevels.shield_duration * 30);
                 dragon.velocity = -4;
-                spawnFloatingText('🔥 FLAME DASH!', dragon.x, dragon.y - 20, skin.primary);
+                spawnFloatingText(`${skin.abilityIcon} ${skin.abilityName.toUpperCase()}!`, dragon.x, dragon.y - 20, skin.primary);
                 for (let i = 0; i < 20; i++) {
                     particles.push({
                         x: dragon.x, y: dragon.y,
@@ -800,14 +902,21 @@
                         size: Math.random() * 5 + 2, color: skin.primary, life: 1.0
                     });
                 }
-            } else if (activeSkin === 'void' || activeSkin === 'amethyst_lord') {
+            } else if (['void', 'shadow_reaper', 'celestial_eclipse'].includes(activeSkin)) {
                 triggerWormholeJump();
-            } else if (activeSkin === 'emerald_dragon') {
+            } else if (['emerald_dragon', 'sakura_spirit'].includes(activeSkin)) {
                 dragon.hasShield = true;
-                spawnFloatingText('💎 EMERALD SHIELD!', dragon.x, dragon.y - 20, skin.primary);
-            } else if (activeSkin === 'frost_bite' || activeSkin === 'amethyst_lord') {
-                dragon.freezeTimer = 360 + (skillLevels.shield_duration * 60);
-                spawnFloatingText('🧊 TIME FREEZE (6s) - PORTAL SLOW!', dragon.x, dragon.y - 20, skin.primary);
+                spawnFloatingText(`${skin.abilityIcon} ${skin.abilityName.toUpperCase()}!`, dragon.x, dragon.y - 20, skin.primary);
+            } else if (['frost_bite', 'amethyst_lord'].includes(activeSkin)) {
+                if (activeBoss) {
+                    dragon.freezeTimer = 360 + (skillLevels.shield_duration * 60);
+                    spawnFloatingText('🧊 TIME FREEZE (BOSS ACTIVE)!', dragon.x, dragon.y - 20, skin.primary);
+                } else {
+                    spawnFloatingText('⚠️ TIME FREEZE ONLY WORKS IN BOSS FIGHTS!', canvas.width / 2 - 130, 90, '#f43f5e');
+                    abilityCooldownFrames = 0;
+                }
+            } else if (['solar_flare', 'toxic_leviathan'].includes(activeSkin)) {
+                triggerLaserBlast();
             }
 
             updateAbilityHUD();
@@ -850,15 +959,8 @@
         }
 
         function executeExitToMenu() {
-            coins = 0;
             sessionCoins = 0;
             skillLevels = { roar_power: 0, shield_duration: 0, magnet_range: 0, coin_boost: 0 };
-            unlockedSkins = ["rainbow"];
-            activeSkin = "rainbow";
-            unlockedPortals = ["default_multi"];
-            activePortalSkin = "default_multi";
-            unlockedTrails = ["rainbow"];
-            activeTrail = "rainbow";
 
             closeConfirmMenuModal();
             isPaused = false;
@@ -868,6 +970,7 @@
             document.getElementById('pauseBtnIcon').innerText = '⏸';
             document.getElementById('bossHpContainer').classList.add('hidden');
             updateCoinDisplays();
+            updateMenuSkinPreview();
             updateAbilityHUD();
         }
 
@@ -942,24 +1045,20 @@
         function startGame() {
             sound.init();
 
-            coins = 0;
             sessionCoins = 0;
             skillLevels = { roar_power: 0, shield_duration: 0, magnet_range: 0, coin_boost: 0 };
-            unlockedSkins = ["rainbow"];
-            activeSkin = "rainbow";
-            unlockedPortals = ["default_multi"];
-            activePortalSkin = "default_multi";
-            unlockedTrails = ["rainbow"];
-            activeTrail = "rainbow";
+
+            boughtHeartsThisGame = false;
+            adsWatchedForHeartsCount = 0;
 
             gameState = 'PLAYING';
             isPaused = false;
-            hearts = 5;
+            hearts = 6;
             score = 0;
             combo = 1;
             surgeTimer = 0;
             abilityCooldownFrames = 0;
-            nextBossLevel = 75;
+            nextBossLevel = 100;
             activeBoss = null;
             playerProjectiles = [];
             bossProjectiles = [];
@@ -970,7 +1069,6 @@
             dragon.hasShield = false;
             dragon.invincibleTimer = 0;
             dragon.scoreMultiplierTimer = 0;
-            dragon.slowMotionTimer = 0;
             dragon.magnetTimer = 0;
             dragon.miniTimer = 0;
             dragon.ghostTimer = 0;
@@ -1006,7 +1104,7 @@
         }
 
         function spawnBoss() {
-            const bossIndex = Math.floor(score / 50) - 1;
+            const bossIndex = Math.floor(score / 100) - 1;
             const bossTemplate = BOSS_TYPES[Math.min(bossIndex, BOSS_TYPES.length - 1)];
             const scaledHp = Math.floor((60 + (score * 1.5)) * bossTemplate.hpMultiplier);
             
@@ -1023,7 +1121,9 @@
                 color: bossTemplate.color,
                 secondaryColor: bossTemplate.secondaryColor,
                 type: bossTemplate.type,
-                teleportTimer: 0
+                teleportTimer: 0,
+                minionsSpawned: false,
+                minions: []
             };
 
             portals = []; 
@@ -1049,6 +1149,7 @@
             
             sessionCoins += rewardCoins;
             coins += rewardCoins;
+            ParserCoinsTotal = totalCoinsEarned + rewardCoins;
             totalCoinsEarned += rewardCoins;
             bossesDefeatedCount++;
             localStorage.setItem('rainbow_flapper_total_coins', totalCoinsEarned);
@@ -1057,7 +1158,7 @@
             checkAchievementProgress();
 
             score += 10;
-            if (hearts < 5) hearts++;
+            if (hearts < 6) hearts++;
             updateHeartsDisplay();
             updateCoinDisplays();
             document.getElementById('scoreDisplay').innerText = score;
@@ -1077,7 +1178,7 @@
             activeBoss = null;
             bossProjectiles = [];
             document.getElementById('bossHpContainer').classList.add('hidden');
-            nextBossLevel += 75;
+            nextBossLevel += 100;
         }
 
         function takeDamage() {
@@ -1165,6 +1266,14 @@
             document.getElementById('surgeBanner').classList.add('hidden');
             document.getElementById('bossHpContainer').classList.add('hidden');
             
+            boughtHeartsThisGame = false;
+            adsWatchedForHeartsCount = 0;
+            const limitSpan = document.getElementById('buyHeartLimit');
+            limitSpan.innerText = "(1-time max)";
+            document.getElementById('buyHeartBtn').classList.remove('opacity-50', 'cursor-not-allowed');
+            document.getElementById('adHeartCount').innerText = "(3 left)";
+            document.getElementById('watchAdHeartBtn').classList.remove('opacity-50', 'cursor-not-allowed');
+
             setTimeout(() => {
                 document.getElementById('gameOverOverlay').classList.remove('hidden');
             }, 400);
@@ -1290,10 +1399,14 @@
 
             if (dragon.invincibleTimer > 0) dragon.invincibleTimer--;
             if (dragon.scoreMultiplierTimer > 0) dragon.scoreMultiplierTimer--;
-            if (dragon.slowMotionTimer > 0) dragon.slowMotionTimer--;
             if (dragon.magnetTimer > 0) dragon.magnetTimer--;
             if (dragon.laserBeamTimer > 0) dragon.laserBeamTimer--;
-            if (dragon.freezeTimer > 0) dragon.freezeTimer--;
+            if (dragon.freezeTimer > 0) {
+                dragon.freezeTimer--;
+                if (!activeBoss) {
+                    dragon.freezeTimer = 0;
+                }
+            }
             if (dragon.cloneTimer > 0) dragon.cloneTimer--;
             if (dragon.titanTimer > 0) {
                 dragon.titanTimer--;
@@ -1315,8 +1428,8 @@
             } else if (dragon.cloneTimer > 0) {
                 activeUI.innerText = `👥 CLONE COMPANION (${Math.ceil(dragon.cloneTimer / 60)}s)`;
                 activeUI.classList.remove('hidden');
-            } else if (dragon.freezeTimer > 0) {
-                activeUI.innerText = activeBoss ? `🧊 BOSS FROZEN (${Math.ceil(dragon.freezeTimer / 60)}s)` : `🧊 PORTAL FREEZE (${Math.ceil(dragon.freezeTimer / 60)}s)`;
+            } else if (dragon.freezeTimer > 0 && activeBoss) {
+                activeUI.innerText = `🧊 BOSS FROZEN (${Math.ceil(dragon.freezeTimer / 60)}s)`;
                 activeUI.classList.remove('hidden');
             } else if (dragon.laserBeamTimer > 0) {
                 activeUI.innerText = `💥 LASER BLAST!`;
@@ -1335,9 +1448,6 @@
                 activeUI.classList.remove('hidden');
             } else if (dragon.scoreMultiplierTimer > 0) {
                 activeUI.innerText = `⭐ 2X SCORE (${Math.ceil(dragon.scoreMultiplierTimer / 60)}s)`;
-                activeUI.classList.remove('hidden');
-            } else if (dragon.slowMotionTimer > 0) {
-                activeUI.innerText = `⏳ SLOW MOTION (${Math.ceil(dragon.slowMotionTimer / 60)}s)`;
                 activeUI.classList.remove('hidden');
             } else {
                 activeUI.classList.add('hidden');
@@ -1363,14 +1473,7 @@
                 document.getElementById('surgeBanner').classList.add('hidden');
             }
 
-            let currentSpeed = dragon.slowMotionTimer > 0 ? config.speed * 0.5 : config.speed;
-            
-            if (dragon.freezeTimer > 0) {
-                if (!activeBoss) {
-                    currentSpeed *= 0.15;
-                }
-            }
-
+            let currentSpeed = config.speed;
             if (surgeTimer > 0) currentSpeed *= 1.35;
 
             dragon.velocity += config.gravity;
@@ -1407,16 +1510,53 @@
                     } else {
                         activeBoss.moveAngle += 0.05;
                         
-                        if (activeBoss.type === 'teleport') {
+                        if (activeBoss.type === 'teleport' || activeBoss.type === 'time_warp') {
                             activeBoss.teleportTimer++;
-                            if (activeBoss.teleportTimer > 150) {
+                            if (activeBoss.teleportTimer > 130) {
                                 activeBoss.teleportTimer = 0;
                                 activeBoss.y = Math.random() * (canvas.height - 200) + 100;
-                                spawnFloatingText('⚡ TELEPORT!', activeBoss.x, activeBoss.y - 20, '#06b6d4');
+                                spawnFloatingText(activeBoss.type === 'time_warp' ? '⏳ TIME WARP!' : '⚡ TELEPORT!', activeBoss.x, activeBoss.y - 20, activeBoss.color);
                             }
                         }
 
                         activeBoss.y = (canvas.height / 2) + Math.sin(activeBoss.moveAngle) * 110;
+
+                        if (activeBoss.hp <= activeBoss.maxHp * 0.5 && !activeBoss.minionsSpawned) {
+                            activeBoss.minionsSpawned = true;
+                            activeBoss.minions = [
+                                { offsetX: 0, offsetY: -60, radius: 14, angleOffset: 0, attackTimer: 0 },
+                                { offsetX: 0, offsetY: 60, radius: 14, angleOffset: Math.PI, attackTimer: 30 }
+                            ];
+                            spawnFloatingText('⚠️ PHASE 2: MINIONS SUMMONED! ⚠', canvas.width / 2 - 110, 130, '#f59e0b');
+                            sound.playAbility();
+                        }
+
+                        if (activeBoss.minionsSpawned && activeBoss.minions) {
+                            activeBoss.minions.forEach((minion, mIndex) => {
+                                minion.angleOffset += 0.08;
+                                minion.offsetY = Math.sin(minion.angleOffset) * 70;
+                                
+                                const minionX = activeBoss.x + Math.cos(minion.angleOffset) * 20;
+                                const minionY = activeBoss.y + minion.offsetY;
+
+                                if (Math.hypot(dragon.x - minionX, dragon.y - minionY) < dragon.radius + minion.radius) {
+                                    takeDamage();
+                                }
+
+                                minion.attackTimer++;
+                                if (minion.attackTimer >= 70) {
+                                    minion.attackTimer = 0;
+                                    const angleToDragon = Math.atan2(dragon.y - minionY, dragon.x - minionX);
+                                    bossProjectiles.push({
+                                        x: minionX,
+                                        y: minionY,
+                                        radius: 5,
+                                        vx: Math.cos(angleToDragon) * 4.0,
+                                        vy: Math.sin(angleToDragon) * 4.0
+                                    });
+                                }
+                            });
+                        }
 
                         activeBoss.attackCooldown++;
                         if (activeBoss.attackCooldown >= 60) {
@@ -1424,7 +1564,7 @@
                             
                             const angleToDragon = Math.atan2(dragon.y - activeBoss.y, dragon.x - activeBoss.x);
 
-                            if (activeBoss.type === 'triple') {
+                            if (activeBoss.type === 'triple' || activeBoss.type === 'tentacle_swarm') {
                                 for (let offset = -0.3; offset <= 0.3; offset += 0.3) {
                                     bossProjectiles.push({
                                         x: activeBoss.x - activeBoss.radius,
@@ -1434,17 +1574,36 @@
                                         vy: Math.sin(angleToDragon + offset) * 5.0
                                     });
                                 }
-                            } else if (activeBoss.type === 'bullet_hell') {
-                                for (let i = 0; i < 4; i++) {
-                                    const spreadAngle = angleToDragon + (i - 1.5) * 0.25;
+                            } else if (activeBoss.type === 'bullet_hell' || activeBoss.type === 'supernova_bullet_hell') {
+                                for (let i = 0; i < 5; i++) {
+                                    const spreadAngle = angleToDragon + (i - 2) * 0.22;
                                     bossProjectiles.push({
                                         x: activeBoss.x - activeBoss.radius,
                                         y: activeBoss.y,
                                         radius: 7,
-                                        vx: Math.cos(spreadAngle) * 4.5,
-                                        vy: Math.sin(spreadAngle) * 4.5
+                                        vx: Math.cos(spreadAngle) * 4.8,
+                                        vy: Math.sin(spreadAngle) * 4.8
                                     });
                                 }
+                            } else if (activeBoss.type === 'lightning_storm') {
+                                for (let i = 0; i < 3; i++) {
+                                    bossProjectiles.push({
+                                        x: activeBoss.x - activeBoss.radius,
+                                        y: activeBoss.y + (i - 1) * 30,
+                                        radius: 6,
+                                        vx: -6.5,
+                                        vy: (Math.random() - 0.5) * 1.5
+                                    });
+                                }
+                            } else if (activeBoss.type === 'freeze_blast') {
+                                bossProjectiles.push({
+                                    x: activeBoss.x - activeBoss.radius,
+                                    y: activeBoss.y,
+                                    radius: 10,
+                                    vx: -5.0,
+                                    vy: 0,
+                                    isIce: true
+                                });
                             } else {
                                 bossProjectiles.push({
                                     x: activeBoss.x - activeBoss.radius,
@@ -1594,7 +1753,7 @@
                 let p = portals[i];
                 p.x -= currentSpeed;
 
-                if (p.vy !== 0 && dragon.freezeTimer === 0) {
+                if (p.vy !== 0) {
                     p.top += p.vy;
                     if (p.top < p.minTop || p.top > p.maxTop) {
                         p.vy *= -1;
@@ -1686,26 +1845,30 @@
 
                     if (pow.type === 'shield') dragon.hasShield = true;
                     else if (pow.type === 'multiplier') dragon.scoreMultiplierTimer = 420 + extendedDuration;
-                    else if (pow.type === 'slow') dragon.slowMotionTimer = 420 + extendedDuration;
                     else if (pow.type === 'magnet') dragon.magnetTimer = 420 + extendedDuration;
                     else if (pow.type === 'mini') dragon.miniTimer = 420 + extendedDuration;
                     else if (pow.type === 'ghost') dragon.ghostTimer = 420 + extendedDuration;
                     else if (pow.type === 'clone') dragon.cloneTimer = 420 + extendedDuration;
                     else if (pow.type === 'heart') {
-                        if (hearts < 5) {
+                        if (hearts < 6) {
                             hearts++;
                             updateHeartsDisplay();
                             spawnFloatingText('+1 ❤️', pow.x, pow.y - 15, '#f43f5e');
                         } else spawnFloatingText('MAX ❤️', pow.x, pow.y - 15, '#f43f5e');
                     }
-                    else if (pow.type === 'teleport') triggerWormholeJump();
                     else if (pow.type === 'laser') triggerLaserBlast();
                     else if (pow.type === 'nuke') triggerNuke();
-                    else if (pow.type === 'freeze') dragon.freezeTimer = 360 + extendedDuration;
+                    else if (pow.type === 'freeze') {
+                        if (activeBoss) {
+                            dragon.freezeTimer = 360 + extendedDuration;
+                        } else {
+                            spawnFloatingText('⚠️ FREEZE ONLY WORKS IN BOSS FIGHTS!', pow.x, pow.y - 15, '#f43f5e');
+                        }
+                    }
                     else if (pow.type === 'titan') dragon.titanTimer = 420 + extendedDuration;
                     else if (pow.type === 'coin_storm') triggerCoinStorm();
 
-                    if (!['heart', 'teleport', 'laser', 'nuke', 'coin_storm'].includes(pow.type)) {
+                    if (!['heart', 'laser', 'nuke', 'coin_storm'].includes(pow.type)) {
                         spawnFloatingText(pow.symbol, pow.x, pow.y - 15, pow.color);
                     }
 
@@ -1730,7 +1893,7 @@
             for (let i = obstacles.length - 1; i >= 0; i--) {
                 let obs = obstacles[i];
                 obs.x -= currentSpeed * 1.2;
-                if (dragon.freezeTimer === 0) obs.y += obs.vy;
+                obs.y += obs.vy;
 
                 if (Math.abs(obs.y - obs.baseY) > 25) obs.vy *= -1;
 
@@ -1805,7 +1968,7 @@
             ctx.save();
             ctx.shadowColor = primaryColor;
             ctx.shadowBlur = 15;
-            ctx.strokeStyle = dragon.freezeTimer > 0 && !activeBoss ? '#38bdf8' : primaryColor;
+            ctx.strokeStyle = primaryColor;
             ctx.lineWidth = 26;
             ctx.globalAlpha = 0.35;
             ctx.beginPath();
@@ -1836,7 +1999,7 @@
 
             ctx.beginPath();
             ctx.ellipse(0, 0, 24, 8, frameCount * 0.05, 0, Math.PI * 2);
-            ctx.strokeStyle = dragon.freezeTimer > 0 && !activeBoss ? '#93c5fd' : secondaryColor;
+            ctx.strokeStyle = secondaryColor;
             ctx.lineWidth = 4;
             ctx.stroke();
 
@@ -2014,6 +2177,31 @@
                 ctx.fill();
 
                 ctx.restore();
+
+                if (activeBoss.minionsSpawned && activeBoss.minions) {
+                    activeBoss.minions.forEach(minion => {
+                        const minionX = activeBoss.x + Math.cos(minion.angleOffset) * 20;
+                        const minionY = activeBoss.y + minion.offsetY;
+
+                        ctx.save();
+                        ctx.shadowColor = '#f59e0b';
+                        ctx.shadowBlur = 12;
+                        ctx.fillStyle = '#f59e0b';
+                        ctx.beginPath();
+                        ctx.arc(minionX, minionY, minion.radius, 0, Math.PI * 2);
+                        ctx.fill();
+
+                        ctx.strokeStyle = '#ffffff';
+                        ctx.lineWidth = 2;
+                        ctx.stroke();
+
+                        ctx.font = '10px Outfit, sans-serif';
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'middle';
+                        ctx.fillText('👾', minionX, minionY);
+                        ctx.restore();
+                    });
+                }
             }
 
             playerProjectiles.forEach(proj => {
@@ -2029,9 +2217,9 @@
 
             bossProjectiles.forEach(bp => {
                 ctx.save();
-                ctx.shadowColor = '#ef4444';
+                ctx.shadowColor = bp.isIce ? '#38bdf8' : '#ef4444';
                 ctx.shadowBlur = 12;
-                ctx.fillStyle = '#f43f5e';
+                ctx.fillStyle = bp.isIce ? '#7dd3fc' : '#f43f5e';
                 ctx.beginPath();
                 ctx.arc(bp.x, bp.y, bp.radius, 0, Math.PI * 2);
                 ctx.fill();
@@ -2072,7 +2260,6 @@
             });
             ctx.globalAlpha = 1.0;
 
-            // DRAW CLONE COMPANION
             if (dragon.cloneTimer > 0 && dragonHistory.length > 15) {
                 const clonePos = dragonHistory[15];
                 ctx.save();
@@ -2192,7 +2379,7 @@
                 ctx.fill();
 
                 const wingY = Math.sin(frameCount * 0.3) * (dragon.radius * 0.6);
-                ctx.fillStyle = activeSkin === 'magma_beast' ? '#b91c1c' : '#f43f5e';
+                ctx.fillStyle = activeSkin === 'magma_beast' ? '#b91c1c' : (activeSkin === 'obsidian_titan' ? '#0f172a' : '#f43f5e');
                 ctx.beginPath();
                 ctx.moveTo(-dragon.radius * 0.2, -dragon.radius * 0.2);
                 ctx.lineTo(-dragon.radius * 0.6, -dragon.radius * 1.2 + wingY);
@@ -2236,397 +2423,429 @@
                 document.getElementById('pauseBtnIcon').innerText = '▶';
                 document.getElementById('pauseOverlay').classList.add('hidden');
             }
-            switchShopTab('skins');
             document.getElementById('shopOverlay').classList.remove('hidden');
+            renderShopItems();
+        }
+
+        function openShopFromMenu() {
+            openShop();
+            switchShopTab('skins');
         }
 
         function closeShop() {
             document.getElementById('shopOverlay').classList.add('hidden');
+            updateMenuSkinPreview();
             if (wasPlayingBeforeShop) {
                 isPaused = false;
                 document.getElementById('pauseBtnIcon').innerText = '⏸';
-            } else {
-                wasPlayingBeforeShop = false;
             }
-        }
-
-        function openQuests() {
-            updateQuestsUI();
-            document.getElementById('questsOverlay').classList.remove('hidden');
-        }
-
-        function closeQuests() {
-            document.getElementById('questsOverlay').classList.add('hidden');
-        }
-
-        function openAchievements() {
-            updateAchievementsUI();
-            document.getElementById('achievementsOverlay').classList.remove('hidden');
-        }
-
-        function closeAchievements() {
-            document.getElementById('achievementsOverlay').classList.add('hidden');
         }
 
         function switchShopTab(tab) {
             activeShopTab = tab;
-            const skinsTabBtn = document.getElementById('tabSkinsBtn');
-            const portalsTabBtn = document.getElementById('tabPortalsBtn');
-            const trailsTabBtn = document.getElementById('tabTrailsBtn');
-            const skillsTabBtn = document.getElementById('tabSkillsBtn');
-            
-            const skinsContainer = document.getElementById('skinsContainer');
-            const portalsContainer = document.getElementById('portalsContainer');
-            const trailsContainer = document.getElementById('trailsContainer');
-            const skillsContainer = document.getElementById('skillsContainer');
+            document.getElementById('skinsContainer').classList.toggle('hidden', tab !== 'skins');
+            document.getElementById('portalsContainer').classList.toggle('hidden', tab !== 'portals');
+            document.getElementById('trailsContainer').classList.toggle('hidden', tab !== 'trails');
+            document.getElementById('skillsContainer').classList.toggle('hidden', tab !== 'skills');
 
-            skinsTabBtn.className = 'flex-1 py-1.5 rounded-lg text-xs font-bold bg-slate-800 border border-white/10 text-slate-400';
-            portalsTabBtn.className = 'flex-1 py-1.5 rounded-lg text-xs font-bold bg-slate-800 border border-white/10 text-slate-400';
-            trailsTabBtn.className = 'flex-1 py-1.5 rounded-lg text-xs font-bold bg-slate-800 border border-white/10 text-slate-400';
-            skillsTabBtn.className = 'flex-1 py-1.5 rounded-lg text-xs font-bold bg-slate-800 border border-white/10 text-slate-400';
+            ['skins', 'portals', 'trails', 'skills'].forEach(t => {
+                const btn = document.getElementById(`tab${t.charAt(0).toUpperCase() + t.slice(1)}Btn`);
+                if (t === tab) {
+                    btn.className = 'flex-1 py-1.5 rounded-lg text-xs font-bold bg-cyan-500/20 border border-cyan-400 text-cyan-300';
+                } else {
+                    btn.className = 'flex-1 py-1.5 rounded-lg text-xs font-bold bg-slate-800 border border-white/10 text-slate-400';
+                }
+            });
 
-            skinsContainer.classList.add('hidden');
-            portalsContainer.classList.add('hidden');
-            trailsContainer.classList.add('hidden');
-            skillsContainer.classList.add('hidden');
-
-            if (tab === 'skins') {
-                skinsTabBtn.className = 'flex-1 py-1.5 rounded-lg text-xs font-bold bg-cyan-500/20 border border-cyan-400 text-cyan-300';
-                skinsContainer.classList.remove('hidden');
-            } else if (tab === 'portals') {
-                portalsTabBtn.className = 'flex-1 py-1.5 rounded-lg text-xs font-bold bg-cyan-500/20 border border-cyan-400 text-cyan-300';
-                portalsContainer.classList.remove('hidden');
-            } else if (tab === 'trails') {
-                trailsTabBtn.className = 'flex-1 py-1.5 rounded-lg text-xs font-bold bg-cyan-500/20 border border-cyan-400 text-cyan-300';
-                trailsContainer.classList.remove('hidden');
-            } else if (tab === 'skills') {
-                skillsTabBtn.className = 'flex-1 py-1.5 rounded-lg text-xs font-bold bg-cyan-500/20 border border-cyan-400 text-cyan-300';
-                skillsContainer.classList.remove('hidden');
-            }
-            updateShopUI();
+            renderShopItems();
         }
 
-        function updateShopUI() {
-            const skinsContainer = document.getElementById('skinsContainer');
-            skinsContainer.innerHTML = '';
-            SKINS.forEach(skin => {
-                const isUnlocked = unlockedSkins.includes(skin.id);
-                const isActive = activeSkin === skin.id;
-                const skinDiv = document.createElement('div');
-                skinDiv.className = 'flex justify-between items-center p-3 bg-slate-900/80 rounded-xl border border-white/10';
+        function renderShopItems() {
+            if (activeShopTab === 'skins') {
+                let html = '';
+                SKINS.forEach(skin => {
+                    const isUnlocked = unlockedSkins.includes(skin.id);
+                    const isTrial = isItemTrialActive(skin.id);
+                    const isActive = activeSkin === skin.id;
+                    const trialDays = getTrialDaysRemaining(skin.id);
 
-                let actionButtonHtml = '';
-                if (isActive) {
-                    actionButtonHtml = `<span class="text-xs font-bold text-emerald-400">EQUIPPED</span>`;
-                } else if (isUnlocked) {
-                    actionButtonHtml = `<button type="button" onclick="equipSkin('${skin.id}')" class="px-3 py-1 rounded-lg bg-cyan-500/20 border border-cyan-400 text-cyan-300 text-xs font-bold pulse-btn">EQUIP</button>`;
-                } else {
-                    if (skin.adUnlock) {
-                        actionButtonHtml = `<button type="button" onclick="openAdModal('skin', '${skin.id}')" class="px-3 py-1 rounded-lg bg-purple-600 hover:bg-purple-500 border border-purple-400 text-white text-xs font-black pulse-btn">📺 WATCH AD</button>`;
+                    let statusBadge = '';
+                    if (isActive) {
+                        statusBadge = '<span class="text-[11px] font-bold text-cyan-400 px-2 py-1">ACTIVE</span>';
+                    } else if (isUnlocked || isTrial) {
+                        let trialText = isTrial ? ` <span class="text-[9px] text-amber-300">(${trialDays}d trial)</span>` : '';
+                        statusBadge = `<button type="button" onclick="selectSkin('${skin.id}')" class="px-3 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-300 text-xs font-bold pulse-btn">EQUIP${trialText}</button>`;
+                    } else if (skin.adUnlock) {
+                        statusBadge = `<button type="button" onclick="openAdModal('skin', '${skin.id}')" class="px-3 py-1 rounded-lg bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-400/50 text-cyan-300 text-xs font-bold pulse-btn flex items-center gap-1">📺 3-Day Trial AD</button>`;
                     } else {
-                        actionButtonHtml = `<button type="button" onclick="buySkin('${skin.id}')" class="px-2.5 py-1 rounded-lg bg-amber-500 border border-amber-400 text-slate-950 text-xs font-black pulse-btn">🪙 ${skin.cost}</button>`;
+                        statusBadge = `<button type="button" onclick="buySkin('${skin.id}',${skin.cost})" class="px-3 py-1 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-black pulse-btn">${skin.cost} 🪙 (Perm)</button>`;
                     }
-                }
 
-                skinDiv.innerHTML = `
-                    <div class="flex items-center gap-2">
-                        <div class="w-6 h-6 rounded-full" style="background: ${skin.primary}"></div>
-                        <div>
-                            <div class="text-xs font-bold text-white flex items-center gap-1.5">
-                                ${skin.name} <span class="text-[10px] text-amber-400 font-semibold">(${skin.abilityName})</span>
+                    html += `
+                        <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-900/90 border ${isActive ? 'border-cyan-400' : 'border-white/10'}">
+                            <div class="flex items-center gap-2.5">
+                                <div class="w-8 h-8 rounded-full flex items-center justify-center text-sm shadow-md" style="background: ${skin.primary};">${skin.abilityIcon}</div>
+                                <div>
+                                    <div class="text-xs font-bold">${skin.name}</div>
+                                    <div class="text-[10px] text-slate-400">Ability: ${skin.abilityName} (${skin.cooldown}s)</div>
+                                </div>
                             </div>
-                            <div class="text-[10px] text-slate-400">${isUnlocked ? 'Unlocked' : (skin.adUnlock ? 'Free via Ad' : `🪙 ${skin.cost} Coins`)}</div>
+                            <div>
+                                ${statusBadge}
+                            </div>
                         </div>
-                    </div>
-                    ${actionButtonHtml}
-                `;
-                skinsContainer.appendChild(skinDiv);
-            });
+                    `;
+                });
+                document.getElementById('skinsContainer').innerHTML = html;
+            } else if (activeShopTab === 'portals') {
+                let html = '';
+                PORTAL_SKINS.forEach(portal => {
+                    const isUnlocked = unlockedPortals.includes(portal.id);
+                    const isTrial = isItemTrialActive(portal.id);
+                    const isActive = activePortalSkin === portal.id;
+                    const trialDays = getTrialDaysRemaining(portal.id);
 
-            const portalsContainer = document.getElementById('portalsContainer');
-            portalsContainer.innerHTML = '';
-            PORTAL_SKINS.forEach(ps => {
-                const isUnlocked = unlockedPortals.includes(ps.id);
-                const isActive = activePortalSkin === ps.id;
-                const portalDiv = document.createElement('div');
-                portalDiv.className = 'flex justify-between items-center p-3 bg-slate-900/80 rounded-xl border border-white/10';
-
-                let actionButtonHtml = '';
-                if (isActive) {
-                    actionButtonHtml = `<span class="text-xs font-bold text-emerald-400">EQUIPPED</span>`;
-                } else if (isUnlocked) {
-                    actionButtonHtml = `<button type="button" onclick="equipPortalSkin('${ps.id}')" class="px-3 py-1 rounded-lg bg-cyan-500/20 border border-cyan-400 text-cyan-300 text-xs font-bold pulse-btn">EQUIP</button>`;
-                } else {
-                    if (ps.adUnlock) {
-                        actionButtonHtml = `<button type="button" onclick="openAdModal('portal', '${ps.id}')" class="px-3 py-1 rounded-lg bg-purple-600 hover:bg-purple-500 border border-purple-400 text-white text-xs font-black pulse-btn">📺 WATCH AD</button>`;
+                    let statusBadge = '';
+                    if (isActive) {
+                        statusBadge = '<span class="text-[11px] font-bold text-cyan-400 px-2 py-1">ACTIVE</span>';
+                    } else if (isUnlocked || isTrial) {
+                        let trialText = isTrial ? ` <span class="text-[9px] text-amber-300">(${trialDays}d trial)</span>` : '';
+                        statusBadge = `<button type="button" onclick="selectPortalSkin('${portal.id}')" class="px-3 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-300 text-xs font-bold pulse-btn">EQUIP${trialText}</button>`;
+                    } else if (portal.adUnlock) {
+                        statusBadge = `<button type="button" onclick="openAdModal('portal', '${portal.id}')" class="px-3 py-1 rounded-lg bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-400/50 text-cyan-300 text-xs font-bold pulse-btn flex items-center gap-1">📺 3-Day Trial AD</button>`;
                     } else {
-                        actionButtonHtml = `<button type="button" onclick="buyPortalSkin('${ps.id}')" class="px-2.5 py-1 rounded-lg bg-amber-500 border border-amber-400 text-slate-950 text-xs font-black pulse-btn">🪙 ${ps.cost}</button>`;
+                        statusBadge = `<button type="button" onclick="buyPortalSkin('${portal.id}',${portal.cost})" class="px-3 py-1 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-black pulse-btn">${portal.cost} 🪙 (Perm)</button>`;
                     }
-                }
 
-                portalDiv.innerHTML = `
-                    <div class="flex items-center gap-2">
-                        <div class="w-6 h-6 rounded-full border border-white/20" style="background: ${ps.previewColor}"></div>
-                        <div>
-                            <div class="text-xs font-bold text-white">${ps.name}</div>
-                            <div class="text-[10px] text-slate-400">${ps.desc}</div>
+                    html += `
+                        <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-900/90 border ${isActive ? 'border-cyan-400' : 'border-white/10'}">
+                            <div class="flex items-center gap-2.5">
+                                <div class="w-8 h-8 rounded-full flex items-center justify-center text-sm shadow-md" style="background: ${portal.previewColor};">🌀</div>
+                                <div>
+                                    <div class="text-xs font-bold">${portal.name}</div>
+                                    <div class="text-[10px] text-slate-400">${portal.desc}</div>
+                                </div>
+                            </div>
+                            <div>
+                                ${statusBadge}
+                            </div>
                         </div>
-                    </div>
-                    ${actionButtonHtml}
-                `;
-                portalsContainer.appendChild(portalDiv);
-            });
+                    `;
+                });
+                document.getElementById('portalsContainer').innerHTML = html;
+            } else if (activeShopTab === 'trails') {
+                let html = '';
+                TRAILS.forEach(trail => {
+                    const isUnlocked = unlockedTrails.includes(trail.id);
+                    const isTrial = isItemTrialActive(trail.id);
+                    const isActive = activeTrail === trail.id;
+                    const trialDays = getTrialDaysRemaining(trail.id);
 
-            const trailsContainer = document.getElementById('trailsContainer');
-            trailsContainer.innerHTML = '';
-            TRAILS.forEach(tr => {
-                const isUnlocked = unlockedTrails.includes(tr.id);
-                const isActive = activeTrail === tr.id;
-                const trailDiv = document.createElement('div');
-                trailDiv.className = 'flex justify-between items-center p-3 bg-slate-900/80 rounded-xl border border-white/10';
-
-                let actionButtonHtml = '';
-                if (isActive) {
-                    actionButtonHtml = `<span class="text-xs font-bold text-emerald-400">EQUIPPED</span>`;
-                } else if (isUnlocked) {
-                    actionButtonHtml = `<button type="button" onclick="equipTrail('${tr.id}')" class="px-3 py-1 rounded-lg bg-cyan-500/20 border border-cyan-400 text-cyan-300 text-xs font-bold pulse-btn">EQUIP</button>`;
-                } else {
-                    if (tr.adUnlock) {
-                        actionButtonHtml = `<button type="button" onclick="openAdModal('trail', '${tr.id}')" class="px-3 py-1 rounded-lg bg-purple-600 hover:bg-purple-500 border border-purple-400 text-white text-xs font-black pulse-btn">📺 WATCH AD</button>`;
+                    let statusBadge = '';
+                    if (isActive) {
+                        statusBadge = '<span class="text-[11px] font-bold text-cyan-400 px-2 py-1">ACTIVE</span>';
+                    } else if (isUnlocked || isTrial) {
+                        let trialText = isTrial ? ` <span class="text-[9px] text-amber-300">(${trialDays}d trial)</span>` : '';
+                        statusBadge = `<button type="button" onclick="selectTrail('${trail.id}')" class="px-3 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-300 text-xs font-bold pulse-btn">EQUIP${trialText}</button>`;
+                    } else if (trail.adUnlock) {
+                        statusBadge = `<button type="button" onclick="openAdModal('trail', '${trail.id}')" class="px-3 py-1 rounded-lg bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-400/50 text-cyan-300 text-xs font-bold pulse-btn flex items-center gap-1">📺 3-Day Trial AD</button>`;
                     } else {
-                        actionButtonHtml = `<button type="button" onclick="buyTrail('${tr.id}')" class="px-2.5 py-1 rounded-lg bg-amber-500 border border-amber-400 text-slate-950 text-xs font-black pulse-btn">🪙 ${tr.cost}</button>`;
+                        statusBadge = `<button type="button" onclick="buyTrail('${trail.id}',${trail.cost})" class="px-3 py-1 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-black pulse-btn">${trail.cost} 🪙 (Perm)</button>`;
                     }
-                }
 
-                trailDiv.innerHTML = `
-                    <div class="flex items-center gap-2">
-                        <div class="w-6 h-6 rounded-full bg-slate-800 flex items-center justify-center text-sm">${tr.preview}</div>
-                        <div>
-                            <div class="text-xs font-bold text-white">${tr.name}</div>
-                            <div class="text-[10px] text-slate-400">${isUnlocked ? 'Unlocked' : (tr.adUnlock ? 'Free via Ad' : `🪙 ${tr.cost} Coins`)}</div>
+                    html += `
+                        <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-900/90 border ${isActive ? 'border-cyan-400' : 'border-white/10'}">
+                            <div class="flex items-center gap-2.5">
+                                <div class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-base">${trail.preview}</div>
+                                <div>
+                                    <div class="text-xs font-bold">${trail.name}</div>
+                                </div>
+                            </div>
+                            <div>
+                                ${statusBadge}
+                            </div>
                         </div>
-                    </div>
-                    ${actionButtonHtml}
-                `;
-                trailsContainer.appendChild(trailDiv);
-            });
-
-            const skillsContainer = document.getElementById('skillsContainer');
-            skillsContainer.innerHTML = '';
-            SKILLS_UPGRADES.forEach(skill => {
-                const currentLvl = skillLevels[skill.id];
-                const upgradeCost = Math.floor(skill.baseCost * Math.pow(skill.costScale, currentLvl));
-                const isMax = currentLvl >= skill.maxLevel;
-
-                const skillDiv = document.createElement('div');
-                skillDiv.className = 'flex justify-between items-center p-3 bg-slate-900/80 rounded-xl border border-white/10';
-                skillDiv.innerHTML = `
-                    <div class="flex items-center gap-2.5">
-                        <div class="w-7 h-7 rounded-xl bg-amber-500/20 border border-amber-400/40 flex items-center justify-center text-sm">${skill.icon}</div>
-                        <div>
-                            <div class="text-xs font-bold text-white">${skill.name} <span class="text-[10px] text-cyan-400">Lvl ${currentLvl}/${skill.maxLevel}</span></div>
-                            <div class="text-[9px] text-slate-400">${skill.desc}</div>
+                    `;
+                });
+                document.getElementById('trailsContainer').innerHTML = html;
+            } else if (activeShopTab === 'skills') {
+                let html = '';
+                SKILLS_UPGRADES.forEach(skill => {
+                    const currentLvl = skillLevels[skill.id];
+                    const nextCost = Math.floor(skill.baseCost * Math.pow(skill.costScale, currentLvl));
+                    const isMax = currentLvl >= skill.maxLevel;
+                    html += `
+                        <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-900/90 border border-white/10">
+                            <div class="flex items-center gap-2.5">
+                                <div class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-base">${skill.icon}</div>
+                                <div>
+                                    <div class="text-xs font-bold">${skill.name} (Lvl ${currentLvl}/${skill.maxLevel})</div>
+                                    <div class="text-[10px] text-slate-400">${skill.desc}</div>
+                                </div>
+                            </div>
+                            <div>
+                                ${isMax ? '<span class="text-[11px] font-bold text-emerald-400 px-2 py-1">MAXED</span>' :
+                                  `<button type="button" onclick="upgradeSkill('${skill.id}',${nextCost})" class="px-3 py-1 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-black pulse-btn">${nextCost} 🪙</button>`}
+                            </div>
                         </div>
-                    </div>
-                    ${isMax ? '<span class="text-xs font-bold text-amber-400">MAX</span>' : `<button type="button" onclick="upgradeSkill('${skill.id}')" class="px-2.5 py-1.5 rounded-lg bg-amber-500 border border-amber-400 text-slate-950 text-xs font-black pulse-btn">🪙 ${upgradeCost}</button>`}
-                `;
-                skillsContainer.appendChild(skillDiv);
-            });
-        }
-
-        function buySkin(id) {
-            const skin = SKINS.find(s => s.id === id);
-            if (coins >= skin.cost) {
-                coins -= skin.cost;
-                unlockedSkins.push(id);
-                activeSkin = id;
-                updateCoinDisplays();
-                updateShopUI();
-                updateAbilityHUD();
-                sound.playCoin();
-            } else {
-                spawnFloatingText('NOT ENOUGH COINS!', canvas.width / 2 - 80, 100, '#ef4444');
+                    `;
+                });
+                document.getElementById('skillsContainer').innerHTML = html;
             }
         }
 
-        function equipSkin(id) {
+        function selectSkin(id) {
             activeSkin = id;
-            updateShopUI();
+            localStorage.setItem('rainbow_flapper_active_skin', activeSkin);
+            renderShopItems();
+            updateMenuSkinPreview();
             updateAbilityHUD();
-            sound.playPowerup();
         }
 
-        function buyPortalSkin(id) {
-            const ps = PORTAL_SKINS.find(p => p.id === id);
-            if (coins >= ps.cost) {
-                coins -= ps.cost;
-                unlockedPortals.push(id);
-                activePortalSkin = id;
+        function buySkin(id, cost) {
+            if (coins >= cost) {
+                coins -= cost;
+                if (!unlockedSkins.includes(id)) unlockedSkins.push(id);
+                localStorage.setItem('rainbow_flapper_unlocked_skins', JSON.stringify(unlockedSkins));
+                activeSkin = id;
+                localStorage.setItem('rainbow_flapper_active_skin', activeSkin);
                 updateCoinDisplays();
-                updateShopUI();
-                sound.playCoin();
+                renderShopItems();
+                updateMenuSkinPreview();
+                updateAbilityHUD();
+                sound.playPowerup();
             } else {
-                spawnFloatingText('NOT ENOUGH COINS!', canvas.width / 2 - 80, 100, '#ef4444');
+                sound.playCrash();
             }
         }
 
-        function equipPortalSkin(id) {
+        function selectPortalSkin(id) {
             activePortalSkin = id;
-            updateShopUI();
-            sound.playPowerup();
+            localStorage.setItem('rainbow_flapper_active_portal', activePortalSkin);
+            renderShopItems();
         }
 
-        function buyTrail(id) {
-            const tr = TRAILS.find(t => t.id === id);
-            if (coins >= tr.cost) {
-                coins -= tr.cost;
-                unlockedTrails.push(id);
-                activeTrail = id;
+        function buyPortalSkin(id, cost) {
+            if (coins >= cost) {
+                coins -= cost;
+                if (!unlockedPortals.includes(id)) unlockedPortals.push(id);
+                localStorage.setItem('rainbow_flapper_unlocked_portals', JSON.stringify(unlockedPortals));
+                activePortalSkin = id;
+                localStorage.setItem('rainbow_flapper_active_portal', activePortalSkin);
                 updateCoinDisplays();
-                updateShopUI();
-                sound.playCoin();
+                renderShopItems();
+                sound.playPowerup();
             } else {
-                spawnFloatingText('NOT ENOUGH COINS!', canvas.width / 2 - 80, 100, '#ef4444');
+                sound.playCrash();
             }
         }
 
-        function equipTrail(id) {
+        function selectTrail(id) {
             activeTrail = id;
-            updateShopUI();
-            sound.playPowerup();
+            localStorage.setItem('rainbow_flapper_active_trail', activeTrail);
+            renderShopItems();
         }
 
-        function upgradeSkill(id) {
-            const skill = SKILLS_UPGRADES.find(s => s.id === id);
-            const currentLvl = skillLevels[id];
-            if (currentLvl >= skill.maxLevel) return;
-            const upgradeCost = Math.floor(skill.baseCost * Math.pow(skill.costScale, currentLvl));
+        function buyTrail(id, cost) {
+            if (coins >= cost) {
+                coins -= cost;
+                if (!unlockedTrails.includes(id)) unlockedTrails.push(id);
+                localStorage.setItem('rainbow_flapper_unlocked_trails', JSON.stringify(unlockedTrails));
+                activeTrail = id;
+                localStorage.setItem('rainbow_flapper_active_trail', activeTrail);
+                updateCoinDisplays();
+                renderShopItems();
+                sound.playPowerup();
+            } else {
+                sound.playCrash();
+            }
+        }
 
-            if (coins >= upgradeCost) {
-                coins -= upgradeCost;
+        function upgradeSkill(id, cost) {
+            if (coins >= cost && skillLevels[id] < 5) {
+                coins -= cost;
                 skillLevels[id]++;
                 updateCoinDisplays();
-                updateShopUI();
-                sound.playCoin();
+                renderShopItems();
+                sound.playPowerup();
             } else {
-                spawnFloatingText('NOT ENOUGH COINS!', canvas.width / 2 - 80, 100, '#ef4444');
+                sound.playCrash();
             }
         }
 
         function openAdModal(type, id) {
             pendingAdItemType = type;
             pendingAdItemId = id;
+            document.getElementById('adModalTitle').innerText = "WATCH AD FOR 3-DAY TRIAL";
+            document.getElementById('adModalDescription').innerText = "Watch a quick promotional video to instantly unlock this item for a 3-day free trial!";
             document.getElementById('adProgressBarContainer').classList.add('hidden');
             document.getElementById('watchAdBtn').classList.remove('hidden');
-            document.getElementById('adModalTitle').innerText = 'WATCH AD TO UNLOCK';
-            document.getElementById('adModalDescription').innerText = 'Watch a quick promotional video to instantly unlock this item for free!';
-            document.getElementById('adModalOverlay').classList.remove('hidden');
-        }
-
-        function openAdForCoins() {
-            pendingAdItemType = 'coins';
-            pendingAdItemId = null;
-            document.getElementById('adProgressBarContainer').classList.add('hidden');
-            document.getElementById('watchAdBtn').classList.remove('hidden');
-            document.getElementById('adModalTitle').innerText = 'WATCH AD FOR COINS';
-            document.getElementById('adModalDescription').innerText = 'Watch a quick promotional video to instantly earn +200 free coins!';
             document.getElementById('adModalOverlay').classList.remove('hidden');
         }
 
         function closeAdModal() {
             document.getElementById('adModalOverlay').classList.add('hidden');
+            pendingAdItemType = null;
+            pendingAdItemId = null;
         }
 
         function simulateAdPlayback() {
-            const watchBtn = document.getElementById('watchAdBtn');
+            const btn = document.getElementById('watchAdBtn');
             const progressContainer = document.getElementById('adProgressBarContainer');
             const progressBar = document.getElementById('adProgressBar');
 
-            watchBtn.classList.add('hidden');
+            btn.classList.add('hidden');
             progressContainer.classList.remove('hidden');
             progressBar.style.width = '0%';
 
-            setTimeout(() => { progressBar.style.width = '50%'; }, 500);
-            setTimeout(() => { progressBar.style.width = '100%'; }, 1000);
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 5;
+                progressBar.style.width = `${progress}%`;
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    document.getElementById('adModalOverlay').classList.add('hidden');
 
-            setTimeout(() => {
-                closeAdModal();
-                if (pendingAdItemType === 'coins') {
-                    coins += 200;
-                    totalCoinsEarned += 200;
-                    localStorage.setItem('rainbow_flapper_total_coins', totalCoinsEarned);
-                    updateCoinDisplays();
-                    spawnFloatingText('📺 +200 FREE COINS!', canvas.width / 2 - 80, 100, '#f59e0b');
-                } else if (pendingAdItemType === 'skin') {
-                    if (!unlockedSkins.includes(pendingAdItemId)) unlockedSkins.push(pendingAdItemId);
-                    activeSkin = pendingAdItemId;
-                    updateShopUI();
-                    updateAbilityHUD();
-                    spawnFloatingText('📺 SKIN UNLOCKED!', canvas.width / 2 - 80, 100, '#a855f7');
-                } else if (pendingAdItemType === 'portal') {
-                    if (!unlockedPortals.includes(pendingAdItemId)) unlockedPortals.push(pendingAdItemId);
-                    activePortalSkin = pendingAdItemId;
-                    updateShopUI();
-                    spawnFloatingText('📺 PORTAL UNLOCKED!', canvas.width / 2 - 80, 100, '#06b6d4');
-                } else if (pendingAdItemType === 'trail') {
-                    if (!unlockedTrails.includes(pendingAdItemId)) unlockedTrails.push(pendingAdItemId);
-                    activeTrail = pendingAdItemId;
-                    updateShopUI();
-                    spawnFloatingText('📺 TRAIL UNLOCKED!', canvas.width / 2 - 80, 100, '#f59e0b');
+                    const trialExpiryTime = Date.now() + (3 * 24 * 60 * 60 * 1000); // 3 Days Trial
+                    adTrialExpirations[pendingAdItemId] = trialExpiryTime;
+                    localStorage.setItem('rainbow_flapper_ad_trials', JSON.stringify(adTrialExpirations));
+
+                    if (pendingAdItemType === 'skin') {
+                        activeSkin = pendingAdItemId;
+                        localStorage.setItem('rainbow_flapper_active_skin', activeSkin);
+                        renderShopItems();
+                        updateMenuSkinPreview();
+                        updateAbilityHUD();
+                        spawnFloatingText('🎁 3-DAY SKIN TRIAL UNLOCKED!', canvas.width / 2 - 100, canvas.height / 2, '#38bdf8');
+                    } else if (pendingAdItemType === 'portal') {
+                        activePortalSkin = pendingAdItemId;
+                        localStorage.setItem('rainbow_flapper_active_portal', activePortalSkin);
+                        renderShopItems();
+                        spawnFloatingText('🎁 3-DAY PORTAL TRIAL UNLOCKED!', canvas.width / 2 - 100, canvas.height / 2, '#38bdf8');
+                    } else if (pendingAdItemType === 'trail') {
+                        activeTrail = pendingAdItemId;
+                        localStorage.setItem('rainbow_flapper_active_trail', activeTrail);
+                        renderShopItems();
+                        spawnFloatingText('🎁 3-DAY TRAIL TRIAL UNLOCKED!', canvas.width / 2 - 100, canvas.height / 2, '#38bdf8');
+                    } else if (pendingAdItemType === 'full_heart_ad') {
+                        adsWatchedForHeartsCount++;
+                        hearts = 6;
+                        updateHeartsDisplay();
+                        document.getElementById('adHeartCount').innerText = `(${3 - adsWatchedForHeartsCount} left)`;
+                        if (adsWatchedForHeartsCount >= 3) {
+                            document.getElementById('watchAdHeartBtn').classList.add('opacity-50', 'cursor-not-allowed');
+                        }
+                        document.getElementById('gameOverOverlay').classList.add('hidden');
+                        gameState = 'PLAYING';
+                        dragon.invincibleTimer = 120;
+                        spawnFloatingText('❤️ FULL HEALTH RESTORED!', dragon.x, dragon.y - 20, '#f43f5e');
+                        sound.playPowerup();
+                    }
+
+                    pendingAdItemType = null;
+                    pendingAdItemId = null;
                 }
-                sound.playCoin();
-            }, 1300);
+            }, 75);
         }
 
-        function updateQuestsUI() {
-            const container = document.getElementById('questsContainer');
-            container.innerHTML = '';
+        function openAdForCoins() {
+            pendingAdItemType = 'coins';
+            document.getElementById('adModalTitle').innerText = "WATCH AD FOR 200 COINS";
+            document.getElementById('adModalDescription').innerText = "Watch a quick video advertisement to receive +200 free arcade coins!";
+            document.getElementById('adProgressBarContainer').classList.add('hidden');
+            document.getElementById('watchAdBtn').classList.remove('hidden');
+            document.getElementById('adModalOverlay').classList.remove('hidden');
+        }
+
+        function openQuests() {
+            wasPlayingBeforeShop = (gameState === 'PLAYING' && !isPaused);
+            if (gameState === 'PLAYING' && !isPaused) {
+                isPaused = true;
+                document.getElementById('pauseBtnIcon').innerText = '▶';
+                document.getElementById('pauseOverlay').classList.add('hidden');
+            }
+            document.getElementById('questsOverlay').classList.remove('hidden');
+            renderQuests();
+        }
+
+        function closeQuests() {
+            document.getElementById('questsOverlay').classList.add('hidden');
+            if (wasPlayingBeforeShop) {
+                isPaused = false;
+                document.getElementById('pauseBtnIcon').innerText = '⏸';
+            }
+        }
+
+        function renderQuests() {
+            let html = '';
             dailyQuests.forEach(q => {
-                const pct = Math.min(100, Math.floor((q.progress / q.target) * 100));
-                const div = document.createElement('div');
-                div.className = 'p-3 bg-slate-900/80 rounded-xl border border-white/10 space-y-2';
-                div.innerHTML = `
-                    <div class="flex justify-between items-center">
-                        <div class="text-xs font-bold text-white">${q.title}</div>
-                        <div class="text-xs font-black text-amber-400">+${q.reward} 🪙</div>
-                    </div>
-                    <div class="text-[10px] text-slate-400">${q.desc}</div>
-                    <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden border border-white/10">
-                        <div class="h-full bg-purple-500 transition-all duration-300" style="width: ${pct}%"></div>
-                    </div>
-                    <div class="flex justify-between items-center text-[10px]">
-                        <span class="text-slate-400">Progress: ${q.progress} / ${q.target}</span>
-                        <span class="${q.completed ? 'text-emerald-400 font-bold' : 'text-slate-500'}">${q.completed ? 'COMPLETED ✓' : 'IN PROGRESS'}</span>
+                const pct = Math.floor((q.progress / q.target) * 100);
+                html += `
+                    <div class="p-3 rounded-xl bg-slate-900/90 border border-white/10 space-y-2">
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs font-bold text-purple-300">${q.title}</span>
+                            <span class="text-[10px] font-bold text-amber-400">+${q.reward} 🪙</span>
+                        </div>
+                        <div class="text-[11px] text-slate-300">${q.desc}</div>
+                        <div class="flex items-center gap-2">
+                            <div class="flex-1 h-2 bg-slate-800 rounded-full overflow-hidden border border-white/10">
+                                <div class="h-full bg-purple-500" style="width: ${pct}%"></div>
+                            </div>
+                            <span class="text-[10px] font-bold text-slate-400">${q.progress}/${q.target}</span>
+                        </div>
                     </div>
                 `;
-                container.appendChild(div);
             });
+            document.getElementById('questsContainer').innerHTML = html;
         }
 
-        function updateAchievementsUI() {
-            const container = document.getElementById('achievementsContainer');
-            container.innerHTML = '';
+        function openAchievements() {
+            wasPlayingBeforeShop = (gameState === 'PLAYING' && !isPaused);
+            if (gameState === 'PLAYING' && !isPaused) {
+                isPaused = true;
+                document.getElementById('pauseBtnIcon').innerText = '▶';
+                document.getElementById('pauseOverlay').classList.add('hidden');
+            }
+            document.getElementById('achievementsOverlay').classList.remove('hidden');
+            renderAchievements();
+        }
+
+        function closeAchievements() {
+            document.getElementById('achievementsOverlay').classList.add('hidden');
+            if (wasPlayingBeforeShop) {
+                isPaused = false;
+                document.getElementById('pauseBtnIcon').innerText = '⏸';
+            }
+        }
+
+        function renderAchievements() {
+            let html = '';
             achievements.forEach(ach => {
                 const pct = Math.min(100, Math.floor((ach.progress / ach.target) * 100));
-                const div = document.createElement('div');
-                div.className = 'p-3 bg-slate-900/80 rounded-xl border border-white/10 space-y-2';
-                div.innerHTML = `
-                    <div class="flex justify-between items-center">
-                        <div class="text-xs font-bold text-white">${ach.title}</div>
-                        <div class="text-xs font-black text-amber-400">+${ach.reward} 🪙</div>
-                    </div>
-                    <div class="text-[10px] text-slate-400">${ach.desc}</div>
-                    <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden border border-white/10">
-                        <div class="h-full bg-cyan-400 transition-all duration-300" style="width: ${pct}%"></div>
-                    </div>
-                    <div class="flex justify-between items-center text-[10px]">
-                        <span class="text-slate-400">Progress: ${ach.progress} / ${ach.target}</span>
-                        <span class="${ach.unlocked ? 'text-emerald-400 font-bold' : 'text-slate-500'}">${ach.unlocked ? 'UNLOCKED 🏆' : 'LOCKED'}</span>
+                html += `
+                    <div class="p-3 rounded-xl bg-slate-900/90 border border-white/10 space-y-2">
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs font-bold text-cyan-300">${ach.title} ${ach.unlocked ? '✅' : ''}</span>
+                            <span class="text-[10px] font-bold text-amber-400">+${ach.reward} 🪙</span>
+                        </div>
+                        <div class="text-[11px] text-slate-300">${ach.desc}</div>
+                        <div class="flex items-center gap-2">
+                            <div class="flex-1 h-2 bg-slate-800 rounded-full overflow-hidden border border-white/10">
+                                <div class="h-full bg-cyan-500" style="width: ${pct}%"></div>
+                            </div>
+                            <span class="text-[10px] font-bold text-slate-400">${ach.progress}/${ach.target}</span>
+                        </div>
                     </div>
                 `;
-                container.appendChild(div);
             });
+            document.getElementById('achievementsContainer').innerHTML = html;
         }
+
+        resizeCanvas();
+        updateCoinDisplays();
+        updateHeartsDisplay();
+        updateMenuSkinPreview();
+        updateAbilityHUD();
 
         function gameLoop() {
             update();
@@ -2634,9 +2853,7 @@
             requestAnimationFrame(gameLoop);
         }
 
-        resizeCanvas();
-        setDifficulty('normal');
-        gameLoop();
+        requestAnimationFrame(gameLoop);
     </script>
 </body>
 </html>
